@@ -1,0 +1,29 @@
+name: CI - Build & Push Docker Images
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push frontend image
+        run: |
+          docker build -t akanshachauhary/kube-visualizer-frontend:latest ./frontend
+          docker push akanshachauhary/kube-visualizer-frontend:latest
+
+      - name: Build and push backend image
+        run: |
+          docker build -t akanshachauhary/kube-visualizer-backend:latest ./backend
+          docker push akanshachauhary/kube-visualizer-backend:latest
