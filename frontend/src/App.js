@@ -1,22 +1,43 @@
-import logo from './logo.svg';
+import { useEffect, useState } from "react";
 import './App.css';
 
 function App() {
+  const [pods, setPods] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch pods from backend
+    fetch("/pods")
+      .then((res) => res.json())
+      .then((data) => {
+        setPods(data.items || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("❌ Failed to fetch pods:", err);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>🚀 KubeVisualizer</h1>
+        {loading ? (
+          <p>Loading pods...</p>
+        ) : (
+          <>
+            <h2>📦 Pods List</h2>
+            <ul>
+              {pods.map((pod, index) => (
+                <li key={index}>
+                  <strong>{pod.metadata.name}</strong> —{" "}
+                  {pod.status.phase}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </header>
     </div>
   );
