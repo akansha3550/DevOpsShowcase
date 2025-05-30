@@ -4,14 +4,21 @@ import * as k8s from '@kubernetes/client-node';
 const app = express();
 const port = 3000;
 
-// Disable TLS verification (⚠️ DEV ONLY!)
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-// Load kubeconfig (mapped into container)
 const kc = new k8s.KubeConfig();
-kc.loadFromFile('/root/.kube/config');
 
-// Optional: mark cluster as skipping TLS
+
+try {
+    kc.loadFromCluster();
+    console.log("Loaded Kubernetes config from cluster");
+} catch (err) {
+    console.warn("Failed to load in-cluster config, falling back to local");
+    kc.loadFromDefault();
+}
+
+
 const cluster = kc.getCurrentCluster();
 if (cluster) {
     cluster.skipTLSVerify = true;
