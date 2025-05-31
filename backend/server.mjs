@@ -22,13 +22,15 @@ app.get('/', (req, res) => {
 app.get('/pods', async (req, res) => {
     try {
         const response = await k8sApi.listPodForAllNamespaces();
-        console.log('Fetched pods:', response.body.items.length); // 👈 helpful debug
+        console.log('Raw response:', response); // 🔍 Add this line
+        console.log('Fetched pods:', response.body?.items?.length);
         res.json(response.body);
     } catch (error) {
         console.error('Error fetching pods:', error);
         res.status(500).json({ error: error.message });
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Backend listening at http://localhost:${port}`);
