@@ -4,10 +4,10 @@ import * as k8s from '@kubernetes/client-node';
 const app = express();
 const port = 3000;
 
-
+// Insecure TLS override (keep only for local testing)
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-// THIS is the fix — load config from cluster when running inside Kubernetes
+// Load cluster config (works inside a Kubernetes Pod)
 const kc = new k8s.KubeConfig();
 kc.loadFromCluster();
 
@@ -18,13 +18,25 @@ app.get('/', (req, res) => {
     res.send('Backend running!');
 });
 
-// Get pods route
+// Pods route
 app.get('/pods', async (req, res) => {
     try {
         const response = await k8sApi.listPodForAllNamespaces();
-        console.log('Raw response:', response); // 🔍 Add this line
+
+        // Safety checks and logging
+        if (!response || !response.body) {
+            console.error('No response body from Kubernetes API');
+            return res.status(500).json({ error: 'No response body from Kubernetes API' });
+        }
+
         const pods = response.body.items;
-        console.log('Fetched pods count:', Array.isArray(pods) ? pods.length : 'Not an array');
+
+        if (!Array.isArray(pods)) {
+            console.error('Invalid pods structure. Expected an array.');
+            return res.status(500).json({ error: 'Unexpected pods structure' });
+        }
+
+        console.log('Fetched pods count:', pods.length);
         res.json(pods);
 
     } catch (error) {
@@ -33,7 +45,7 @@ app.get('/pods', async (req, res) => {
     }
 });
 
-
+// Start server
 app.listen(port, () => {
     console.log(`Backend listening at http://localhost:${port}`);
 });
