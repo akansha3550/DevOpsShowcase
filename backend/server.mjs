@@ -23,8 +23,10 @@ app.get('/pods', async (req, res) => {
     try {
         const response = await k8sApi.listPodForAllNamespaces();
         console.log('Raw response:', response); // 🔍 Add this line
-        console.log('Fetched pods:', response.body?.items?.length);
-        res.json(response.body);
+        const pods = response.body.items;
+        console.log('Fetched pods count:', Array.isArray(pods) ? pods.length : 'Not an array');
+        res.json(pods);
+
     } catch (error) {
         console.error('Error fetching pods:', error);
         res.status(500).json({ error: error.message });
