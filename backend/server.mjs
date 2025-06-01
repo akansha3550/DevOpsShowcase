@@ -9,7 +9,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // Load cluster config (works inside a Kubernetes Pod)
 const kc = new k8s.KubeConfig();
-kc.loadFromCluster();
+kc.loadFromDefault();
+
 
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 
@@ -41,7 +42,8 @@ app.get('/pods', async (req, res) => {
 
     } catch (error) {
         console.error('Error fetching pods:', error);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message, stack: error.stack });
+
     }
 });
 
