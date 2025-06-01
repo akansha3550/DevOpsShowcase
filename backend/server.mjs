@@ -4,50 +4,98 @@ import * as k8s from '@kubernetes/client-node';
 const app = express();
 const port = 3000;
 
-// Insecure TLS override (keep only for local testing)
+// For local testing only — disables TLS cert verification
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-// Load cluster config (works inside a Kubernetes Pod)
+// Load Kubernetes config from your environment (default location: ~/.kube/config)
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 
-
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 
-// Health check
+// Health check endpoint
 app.get('/', (req, res) => {
     res.send('Backend running!');
 });
 
-// Pods route
+// Endpoint to fetch and display Kubernetes pods
 app.get('/pods', async (req, res) => {
     try {
-        const response = await k8sApi.listPodForAllNamespaces();
+        const podsList = await k8sApi.listPodForAllNamespaces();
 
-        // Safety checks and logging
-        if (!response || !response.body) {
-            console.error('No response body from Kubernetes API');
-            return res.status(500).json({ error: 'No response body from Kubernetes API' });
+        if (!podsList || !podsList.items) {
+            console.error('Invalid response from Kubernetes API');
+            return res.status(500).send('<h2>Invalid response from Kubernetes API</h2>');
         }
 
-        const pods = response.body.items;
+        const pods = podsList.items;
 
-        if (!Array.isArray(pods)) {
-            console.error('Invalid pods structure. Expected an array.');
-            return res.status(500).json({ error: 'Unexpected pods structure' });
-        }
+        const simplifiedPods = pods.map(pod => ({
+            name: pod.metadata?.name,
+            namespace: pod.metadata?.namespace,
+            status: pod.status?.phase,
+            podIP: pod.status?.podIP || 'N/A',
+            nodeName: pod.spec?.nodeName || 'N/A',
+            image: pod.spec?.containers?.map(c => c.image).join(', ') || 'N/A',
+            startTime: pod.status?.startTime,
+        }));
 
-        console.log('Fetched pods count:', pods.length);
-        res.json(pods);
+        // Generate HTML table
+        const tableRows = simplifiedPods.map(pod => `
+            <tr>
+                <td>${pod.name}</td>
+                <td>${pod.namespace}</td>
+                <td>${pod.status}</td>
+                <td>${pod.podIP}</td>
+                <td>${pod.nodeName}</td>
+                <td>${pod.image}</td>
+                <td>${new Date(pod.startTime).toLocaleString()}</td>
+            </tr>
+        `).join('');
+
+        const html = `
+            <html>
+            <head>
+                <title>Kubernetes Pods</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 20px; }
+                    table { border-collapse: collapse; width: 100%; }
+                    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+                    th { background-color: #f2f2f2; }
+                    tr:hover { background-color: #f9f9f9; }
+                </style>
+            </head>
+            <body>
+                <h2>Kubernetes Pods</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Namespace</th>
+                            <th>Status</th>
+                            <th>Pod IP</th>
+                            <th>Node</th>
+                            <th>Image</th>
+                            <th>Start Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            </body>
+            </html>
+        `;
+
+        res.send(html);
 
     } catch (error) {
         console.error('Error fetching pods:', error);
-        res.status(500).json({ error: error.message, stack: error.stack });
-
+        res.status(500).send(`<pre>${error.message}\n\n${error.stack}</pre>`);
     }
 });
 
-// Start server
+// Start the backend server
 app.listen(port, () => {
     console.log(`Backend listening at http://localhost:${port}`);
 });

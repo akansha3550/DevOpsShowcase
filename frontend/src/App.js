@@ -14,7 +14,7 @@ function App() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("❌ Failed to fetch pods:", err);
+        console.error("Failed to fetch pods:", err);
         setLoading(false);
       });
   }, []);
@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>🚀 KubeVisualizer</h1>
+        <h1>KubeVisualizer</h1>
         {loading ? (
           <p>Loading pods...</p>
         ) : (
