@@ -49,18 +49,14 @@ API Calls & Service Communication
 ## 📦 Project Structure
 
 .
-├── .github/workflows # GitHub Actions CI/CD pipelines
-├── k8s/ # Kubernetes manifests for frontend & backend
-├── terraform/ # Terraform scripts to provision AWS EC2 + SG
-├── frontend/ # React app (Dockerized)
-├── backend/ # Express API (Dockerized)
-├── README.md # This file
-
----
+- ├── .github/workflows # GitHub Actions CI/CD pipelines
+- ├── k8s/ # Kubernetes manifests for frontend & backend
+- ├── terraform/ # Terraform scripts to provision AWS EC2 + SG
+- ├── frontend/ # React app (Dockerized)
+- ├── backend/ # Express API (Dockerized)
+- ├── README.md # This file
 
 ## 🚀 Step-by-Step Setup Guide
-
----
 
 ### ⚙️ Phase 1: Local DevOps Workflow
 
@@ -71,13 +67,13 @@ API Calls & Service Communication
 
 2. **Build Docker images**
 
-docker build -t your-dockerhub/frontend ./frontend
-docker build -t your-dockerhub/backend ./backend
+   docker build -t your-dockerhub/frontend ./frontend
+   docker build -t your-dockerhub/backend ./backend
 
 3. **Run locally using Minikube**
 
-minikube start
-kubectl apply -f k8s/
+   minikube start
+   kubectl apply -f k8s/
 
 4. **Access the App**
 
