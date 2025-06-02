@@ -1,41 +1,81 @@
 import { useEffect, useState } from "react";
-import './App.css';
+import "./App.css";
 
 function App() {
   const [pods, setPods] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [refreshCount, setRefreshCount] = useState(0);
 
-  useEffect(() => {
-    // Fetch pods from backend
+  // Fetch pods
+  const fetchPods = () => {
+    setLoading(true);
     fetch("/pods")
       .then((res) => res.json())
       .then((data) => {
         setPods(data.items || []);
         setLoading(false);
+        setError("");
       })
       .catch((err) => {
         console.error("Failed to fetch pods:", err);
+        setError("Failed to fetch pods");
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchPods();
+    // Auto-refresh every 30s
+    const interval = setInterval(() => {
+      setRefreshCount((prev) => prev + 1);
+      fetchPods();
+    }, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>KubeVisualizer</h1>
-        {loading ? (
-          <p>Loading pods...</p>
-        ) : (
+        <h1>🚀 KubeVisualizer Dashboard</h1>
+        <button className="refresh-btn" onClick={fetchPods}>
+          🔁 Manual Refresh
+        </button>
+        {loading && <p>Loading pods...</p>}
+        {error && <p className="error">{error}</p>}
+
+        {!loading && !error && (
           <>
-            <h2>📦 Pods List</h2>
-            <ul>
+            <h2>📦 Pods List ({pods.length} total)</h2>
+            <div className="pod-grid">
               {pods.map((pod, index) => (
-                <li key={index}>
-                  <strong>{pod.metadata.name}</strong> —{" "}
-                  {pod.status.phase}
-                </li>
+                <div key={index} className="pod-card">
+                  <h3>{pod.metadata.name}</h3>
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    <span
+                      className={
+                        pod.status.phase === "Running"
+                          ? "status-running"
+                          : "status-error"
+                      }
+                    >
+                      {pod.status.phase}
+                    </span>
+                  </p>
+                  <p>
+                    <strong>Namespace:</strong> {pod.metadata.namespace}
+                  </p>
+                  <p>
+                    <strong>Node:</strong> {pod.spec.nodeName || "N/A"}
+                  </p>
+                  <p>
+                    <strong>Start Time:</strong>{" "}
+                    {new Date(pod.status.startTime).toLocaleString()}
+                  </p>
+                </div>
               ))}
-            </ul>
+            </div>
           </>
         )}
       </header>
