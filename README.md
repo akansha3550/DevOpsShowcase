@@ -30,7 +30,7 @@ KubeVisualizer is a demo app (frontend + backend) packaged in Docker, deployed o
 - ✅ Scalable, production-ready architecture
 
 ## 📸 Application Architecture
- ```bash
+ ```pgsql
                  +--------------------+
                  |    GitHub Repo     |
                  +--------------------+
