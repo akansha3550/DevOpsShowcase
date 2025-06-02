@@ -48,7 +48,6 @@ API Calls & Service Communication
 
 ## 📦 Project Structure
 
-.
 - ├── .github/workflows # GitHub Actions CI/CD pipelines
 - ├── k8s/ # Kubernetes manifests for frontend & backend
 - ├── terraform/ # Terraform scripts to provision AWS EC2 + SG
@@ -66,18 +65,18 @@ API Calls & Service Communication
    cd DevOpsShowcase
 
 2. **Build Docker images**
-
+   ```bash
    docker build -t your-dockerhub/frontend ./frontend
    docker build -t your-dockerhub/backend ./backend
 
 3. **Run locally using Minikube**
-
+   ```bash
    minikube start
    kubectl apply -f k8s/
 
 4. **Access the App**
-
-minikube service frontend-service
+   ```bash
+   minikube service frontend-service
 
 **Phase 2: Cloud Infrastructure on AWS**
 
@@ -89,45 +88,45 @@ minikube service frontend-service
 🔨 Terraform Setup (in terraform/ folder)
 
 1. **Initialize & apply Terraform scripts**
-   
-cd terraform
-terraform init
-terraform apply
+   ```bash  
+   cd terraform
+   terraform init
+   terraform apply
 
 2. **Outputs:**
 
-* EC2 instance with Ubuntu 20.04
-* Open ports (SSH, 3000, 5000, 80)
-* k3s auto-installed via provisioner
+- EC2 instance with Ubuntu 20.04
+- Open ports (SSH, 3000, 5000, 80)
+- k3s auto-installed via provisioner
 
 3. **SSH into your instance**
-   
-ssh -i ~/.ssh/id_rsa ubuntu@<EC2_PUBLIC_IP>
+   ```bash
+   ssh -i ~/.ssh/id_rsa ubuntu@<EC2_PUBLIC_IP>
 
 4. **Deploy App on Kubernetes**
-
-scp -i ~/.ssh/id_rsa -r ../k8s ubuntu@<EC2_PUBLIC_IP>:~/k8s
-ssh ubuntu@<EC2_PUBLIC_IP>
-kubectl apply -f ~/k8s/
+   ```bash
+  scp -i ~/.ssh/id_rsa -r ../k8s ubuntu@<EC2_PUBLIC_IP>:~/k8s
+  ssh ubuntu@<EC2_PUBLIC_IP>
+  kubectl apply -f ~/k8s/
 
 🔄 GitHub Actions: CI/CD Deployment
 1. **CI Workflow**
 
-* On code push, builds Docker image
-* Pushes to Docker Hub
+- On code push, builds Docker image
+- Pushes to Docker Hub
 
 2. **CD Workflow (via SSH)**
 
-* Connects to EC2
-* Pulls updated YAML / images
-* Runs kubectl apply to update services
+- Connects to EC2
+- Pulls updated YAML / images
+- Runs kubectl apply to update services
 
 3. **Secrets Required in GitHub**
 
-* DOCKER_USERNAME
-* DOCKER_PASSWORD
-* EC2_HOST
-* EC2_SSH_KEY (private key)
+- DOCKER_USERNAME
+- DOCKER_PASSWORD
+- EC2_HOST
+- EC2_SSH_KEY (private key)
 
 🌐 Accessing the App
 Once deployed, you can access the app using your EC2 public IP on port 30000 (or whichever NodePort is used in your frontend service.yaml).
