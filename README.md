@@ -29,9 +29,6 @@ KubeVisualizer is a demo app (frontend + backend) packaged in Docker, deployed o
 - ✅ End-to-end CI/CD from GitHub to Kubernetes cluster
 - ✅ Scalable, production-ready architecture
 
-## 📸 Application Architecture
-![image](https://github.com/user-attachments/assets/870e65dc-fd6e-406e-bc41-fce557811f5a)
-
 ## Project Structure
 
 - ├── .github/workflows # GitHub Actions CI/CD pipelines
