@@ -2,13 +2,9 @@
 
 Welcome to **KubeVisualizer**, a full-stack DevOps project built to simulate real-world infrastructure and CI/CD pipelines. This project demonstrates modern DevOps practices using containerized microservices, Kubernetes orchestration, cloud infrastructure provisioning, and automated CI/CD workflows.
 
----
-
 ## 🎯 Project Overview
 
 KubeVisualizer is a demo app (frontend + backend) packaged in Docker, deployed on Kubernetes, and hosted on AWS. The infrastructure is provisioned using Terraform, and GitHub Actions is used for CI/CD.
-
----
 
 ## 🧰 Tech Stack Used
 
@@ -33,8 +29,6 @@ KubeVisualizer is a demo app (frontend + backend) packaged in Docker, deployed o
 - ✅ End-to-end CI/CD from GitHub to Kubernetes cluster
 - ✅ Scalable, production-ready architecture
 
----
-
 ## 📸 Application Architecture
 GitHub → GitHub Actions → Docker Hub
 ↓
@@ -46,7 +40,7 @@ Frontend (React) Backend (Node.js)
 ↘ ↙
 API Calls & Service Communication
 
-## 📦 Project Structure
+## Project Structure
 
 - ├── .github/workflows # GitHub Actions CI/CD pipelines
 - ├── k8s/ # Kubernetes manifests for frontend & backend
@@ -55,9 +49,9 @@ API Calls & Service Communication
 - ├── backend/ # Express API (Dockerized)
 - ├── README.md # This file
 
-## 🚀 Step-by-Step Setup Guide
+## Step-by-Step Setup Guide
 
-### ⚙️ Phase 1: Local DevOps Workflow
+### Phase 1: Local DevOps Workflow
 
 1. **Clone the repository**
    ```bash
@@ -105,9 +99,9 @@ API Calls & Service Communication
 
 4. **Deploy App on Kubernetes**
    ```bash
-  scp -i ~/.ssh/id_rsa -r ../k8s ubuntu@<EC2_PUBLIC_IP>:~/k8s
-  ssh ubuntu@<EC2_PUBLIC_IP>
-  kubectl apply -f ~/k8s/
+   scp -i ~/.ssh/id_rsa -r ../k8s ubuntu@<EC2_PUBLIC_IP>:~/k8s
+   ssh ubuntu@<EC2_PUBLIC_IP>
+   kubectl apply -f ~/k8s/
 
 🔄 GitHub Actions: CI/CD Deployment
 1. **CI Workflow**
