@@ -62,8 +62,8 @@ KubeVisualizer is a demo app (frontend + backend) packaged in Docker, deployed o
                | Frontend Pod|  | Backend Pod  |
                |  (React)    |  | (Node.js API)|
                +-------------+  +--------------+
---- 
-
+****
+ 
 ## Project Structure
 
 - ├── .github/workflows # GitHub Actions CI/CD pipelines
