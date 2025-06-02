@@ -7,23 +7,25 @@ function App() {
   const [error, setError] = useState("");
   const [refreshCount, setRefreshCount] = useState(0);
 
-  // Change this to match your backend service name inside the cluster
+  // ✅ Kubernetes internal DNS service name (works inside the cluster)
   const API_BASE_URL = "http://backend-service:5000";
 
   const fetchPods = () => {
     setLoading(true);
     fetch(`${API_BASE_URL}/pods`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Server error");
+        return res.json();
+      })
       .then((data) => {
         setPods(data.items || []);
-        setLoading(false);
         setError("");
       })
       .catch((err) => {
         console.error("Failed to fetch pods:", err);
-        setError("Failed to fetch pods");
-        setLoading(false);
-      });
+        setError("❌ Failed to fetch pods. Make sure backend-service is reachable.");
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -42,7 +44,8 @@ function App() {
         <button className="refresh-btn" onClick={fetchPods}>
           🔁 Manual Refresh
         </button>
-        {loading && <p>Loading pods...</p>}
+
+        {loading && <p>⏳ Loading pods...</p>}
         {error && <p className="error">{error}</p>}
 
         {!loading && !error && (
