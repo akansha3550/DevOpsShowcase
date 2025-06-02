@@ -8,7 +8,7 @@ function App() {
   const [refreshCount, setRefreshCount] = useState(0);
 
   // ✅ Kubernetes internal DNS service name (works inside the cluster)
-  // const API_BASE_URL = "http://backend-service:5000";
+
   const API_BASE_URL = "http://backend-service:5000";
 
 
