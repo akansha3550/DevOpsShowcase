@@ -30,15 +30,38 @@ KubeVisualizer is a demo app (frontend + backend) packaged in Docker, deployed o
 - ✅ Scalable, production-ready architecture
 
 ## 📸 Application Architecture
-GitHub → GitHub Actions → Docker Hub
-↓
-Terraform (AWS Infra)
-↓
-AWS EC2 + k3s Cluster
-↓ ↓
-Frontend (React) Backend (Node.js)
-↘ ↙
-API Calls & Service Communication
+                 +--------------------+
+                 |    GitHub Repo     |
+                 +--------------------+
+                           |
+                           v
+                 +--------------------+
+                 |   GitHub Actions   |
+                 | (CI/CD Pipelines)  |
+                 +--------------------+
+                  |                |
+ Docker Build & Push         CD via SSH & kubectl
+        to                          apply manifests
+  Docker Hub Repo                      |
+                  \                  /
+                   v                v
+            +-----------------------------+
+            |     AWS EC2 Instance        |
+            | (Provisioned by Terraform)  |
+            +-----------------------------+
+                           |
+                    +--------------+
+                    |    k3s       |
+                    | Kubernetes   |
+                    +--------------+
+                        /       \
+                       /         \
+                      v           v
+               +-------------+  +--------------+
+               | Frontend Pod|  | Backend Pod  |
+               |  (React)    |  | (Node.js API)|
+               +-------------+  +--------------+
+
 
 ## Project Structure
 
