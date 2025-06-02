@@ -7,10 +7,12 @@ function App() {
   const [error, setError] = useState("");
   const [refreshCount, setRefreshCount] = useState(0);
 
-  // Fetch pods
+  // Change this to match your backend service name inside the cluster
+  const API_BASE_URL = "http://backend-service:5000";
+
   const fetchPods = () => {
     setLoading(true);
-    fetch("/pods")
+    fetch(`${API_BASE_URL}/pods`)
       .then((res) => res.json())
       .then((data) => {
         setPods(data.items || []);
@@ -26,7 +28,6 @@ function App() {
 
   useEffect(() => {
     fetchPods();
-    // Auto-refresh every 30s
     const interval = setInterval(() => {
       setRefreshCount((prev) => prev + 1);
       fetchPods();
