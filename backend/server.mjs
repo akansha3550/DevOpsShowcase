@@ -96,6 +96,10 @@ app.get('/pods', async (req, res) => {
 });
 
 // Start the backend server
-app.listen(port, () => {
-    console.log(`Backend listening at http://localhost:${port}`);
+// app.listen(port, () => {
+//     console.log(`Backend listening at http://localhost:${port}`);
+// });
+
+app.listen(port, '0.0.0.0', () => {
+    console.log(`✅ Backend listening at http://0.0.0.0:${port}`);
 });
