@@ -23,3 +23,11 @@ yarn-error.log*
 .minikube/
 minikube/
 backend/minikube-linux-amd64
+
+.terraform/
+.terraform.lock.hcl
+
+terraform.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
