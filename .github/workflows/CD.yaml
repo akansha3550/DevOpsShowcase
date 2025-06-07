@@ -23,6 +23,9 @@ jobs:
             echo "Pulling latest frontend image"
             docker pull akanshachauhary/kube-visualizer-frontend:latest
             
+            echo "Setting kubeconfig"
+            export KUBECONFIG=/home/ubuntu/k3s.yaml
+
             echo "Applying Kubernetes manifests"
             kubectl apply -f /home/ubuntu/kube-visualizer/k8s/
           EOF
