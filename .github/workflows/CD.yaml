@@ -26,6 +26,6 @@ jobs:
             echo "Setting kubeconfig"
             export KUBECONFIG=/home/ubuntu/k3s.yaml
 
-            echo "Applying Kubernetes manifests"
+            echo "Applying Kubernetes manifests files"
             kubectl apply -f /home/ubuntu/kube-visualizer/k8s/
           EOF
