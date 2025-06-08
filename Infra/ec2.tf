@@ -11,7 +11,7 @@ resource "aws_instance" "k3s_node" {
   tags = {
     Name = "k3s-node"
   }
-
+# this is a simple user data script to install k3s
   user_data = <<-EOF
               #!/bin/bash
               curl -sfL https://get.k3s.io | sh -
