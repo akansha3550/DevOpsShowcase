@@ -1,3 +1,4 @@
+# This file configures the backend for Terraform state management using S3 and DynamoDB.
 terraform {
   backend "s3" {
     bucket         = "deletelaters3backend"
