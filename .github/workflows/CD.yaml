@@ -1,35 +1,3 @@
-# name: CD - Deploy to Kubernetes
-
-# on:
-#   push:
-#     branches: [main]
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Save SSH key
-#         run: |
-#           echo "${{ secrets.EC2_KEY }}" > ec2-key.pem
-#           chmod 600 ec2-key.pem
-
-#       - name: Deploy to EC2 Server
-#         run: |
-#           ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-#             echo "Pulling latest backend image"
-#             docker pull akanshachauhary/kube-visualizer-backend:latest
-
-#             echo "Pulling latest frontend image"
-#             docker pull akanshachauhary/kube-visualizer-frontend:latest
-
-#             echo "Setting kubeconfig"
-#             export KUBECONFIG=/home/ubuntu/k3s.yaml
-
-#             echo "Applying Kubernetes manifests files"
-#             kubectl apply -f /home/ubuntu/DevOpsShowcase/k8s/
-#           EOF
-
 name: CD - Deploy to Kubernetes
 
 on:
