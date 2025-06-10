@@ -239,23 +239,14 @@ app.get('/', (req, res) => {
 
 app.get('/pods', async (req, res) => {
     try {
-        const podsList = await k8sApi.listPodForAllNamespaces();
-        const simplifiedPods = podsList.items.map(pod => ({
-            name: pod.metadata?.name,
-            namespace: pod.metadata?.namespace,
-            status: pod.status?.phase,
-            podIP: pod.status?.podIP || 'N/A',
-            nodeName: pod.spec?.nodeName || 'N/A',
-            image: pod.spec?.containers?.map(c => c.image).join(', ') || 'N/A',
-            startTime: pod.status?.startTime,
-        }));
-        res.json(simplifiedPods);
+        const response = await fetch('http://backend-service:5000/pods');
+        const data = await response.json();
+        res.json(data);
     } catch (error) {
-        console.error('Error fetching pods:', error);
-        res.status(500).json({ error: error.message });
+        console.error('Error proxying to backend-service:', error);
+        res.status(500).json({ error: 'Failed to proxy to backend-service' });
     }
 });
-
 app.listen(port, '0.0.0.0', () => {
     console.log(`Backend running at http://0.0.0.0:${port}`);
 });
