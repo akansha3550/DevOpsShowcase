@@ -174,49 +174,88 @@
 
 
 
+// import express from 'express';
+// import * as k8s from '@kubernetes/client-node';
+// import fetch from 'node-fetch'; // ✅ ADD THIS
+
+// const app = express();
+// const port = 5000; // ✅ Must match your frontend container port
+
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+// // Load K8s config (you already had this)
+// const kc = new k8s.KubeConfig();
+// kc.loadFromDefault();
+
+// const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+
+// // 🟢 Health check
+// app.get('/', (req, res) => {
+//     res.send('Frontend server is running');
+// });
+
+// // 🟢 This is the PROXY — your frontend React will hit this!
+// app.get('/pods', async (req, res) => {
+//     try {
+//         const response = await fetch("http://backend-service:5000/pods"); // 🔁 Your backend-service
+//         const data = await response.json();
+//         res.json(data); // return it to frontend
+//     } catch (error) {
+//         console.error('Error proxying to backend-service:', error);
+//         res.status(500).json({ error: 'Failed to proxy to backend-service' });
+//     }
+// });
+
+// // Serve React build (make sure you build React before Dockerizing)
+// app.use(express.static("build"));
+
+// // Catch-all for React SPA routes
+// app.get("*", (req, res) => {
+//     res.sendFile(path.resolve("build", "index.html"));
+// });
+
+// app.listen(port, '0.0.0.0', () => {
+//     console.log(`Frontend server running at http://0.0.0.0:${port}`);
+// });
+
+
+
 import express from 'express';
 import * as k8s from '@kubernetes/client-node';
-import fetch from 'node-fetch'; // ✅ ADD THIS
 
 const app = express();
-const port = 5000; // ✅ Must match your frontend container port
+const port = 3000;
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-// Load K8s config (you already had this)
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 
-// 🟢 Health check
 app.get('/', (req, res) => {
-    res.send('Frontend server is running');
+    res.send('Backend running!');
 });
 
-// 🟢 This is the PROXY — your frontend React will hit this!
 app.get('/pods', async (req, res) => {
     try {
-        const response = await fetch("http://backend-service:5000/pods"); // 🔁 Your backend-service
-        const data = await response.json();
-        res.json(data); // return it to frontend
+        const podsList = await k8sApi.listPodForAllNamespaces();
+        const simplifiedPods = podsList.items.map(pod => ({
+            name: pod.metadata?.name,
+            namespace: pod.metadata?.namespace,
+            status: pod.status?.phase,
+            podIP: pod.status?.podIP || 'N/A',
+            nodeName: pod.spec?.nodeName || 'N/A',
+            image: pod.spec?.containers?.map(c => c.image).join(', ') || 'N/A',
+            startTime: pod.status?.startTime,
+        }));
+        res.json(simplifiedPods);
     } catch (error) {
-        console.error('Error proxying to backend-service:', error);
-        res.status(500).json({ error: 'Failed to proxy to backend-service' });
+        console.error('Error fetching pods:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 
-// Serve React build (make sure you build React before Dockerizing)
-app.use(express.static("build"));
-
-// Catch-all for React SPA routes
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve("build", "index.html"));
-});
-
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Frontend server running at http://0.0.0.0:${port}`);
+    console.log(`Backend running at http://0.0.0.0:${port}`);
 });
-
-
-
