@@ -7,18 +7,13 @@ function App() {
   const [error, setError] = useState("");
   const [refreshCount, setRefreshCount] = useState(0);
 
-  // ✅ Kubernetes internal DNS service name (works inside the cluster)
-
-  // const API_BASE_URL = "http://localhost:5000";
-  // const API_BASE_URL = "";
-  const API_BASE_URL = "http://backend-service:5000";
-
-
+  // ✅ Call same origin (frontend Express proxy)
+  const API_BASE_URL = ""; // <- this makes fetch call same host:port
 
 
   const fetchPods = () => {
     setLoading(true);
-    fetch(`${API_BASE_URL}/pods`)
+    fetch(`/pods`)
       .then((res) => {
         if (!res.ok) throw new Error("Server error");
         return res.json();
@@ -29,7 +24,7 @@ function App() {
       })
       .catch((err) => {
         console.error("Failed to fetch pods:", err);
-        setError(" Failed to fetch pods. Make sure backend-service is reachable.");
+        setError("Failed to fetch pods. Backend unreachable.");
       })
       .finally(() => setLoading(false));
   };
