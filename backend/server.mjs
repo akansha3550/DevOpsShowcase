@@ -239,12 +239,33 @@ app.get('/', (req, res) => {
 
 app.get('/pods', async (req, res) => {
     try {
-        const response = await fetch('http://backend-service:5000/pods');
-        const data = await response.json();
-        res.json(data);
+        const podsList = await k8sApi.listPodForAllNamespaces();
+
+        if (!podsList || !podsList.items) {
+            console.error('Invalid response from Kubernetes API');
+            return res.status(500).json({ error: 'Invalid response from Kubernetes API' });
+        }
+
+        const pods = podsList.items;
+
+        const simplifiedPods = pods.map(pod => ({
+            metadata: {
+                name: pod.metadata?.name,
+                namespace: pod.metadata?.namespace,
+            },
+            status: {
+                phase: pod.status?.phase,
+                startTime: pod.status?.startTime,
+            },
+            spec: {
+                nodeName: pod.spec?.nodeName,
+            }
+        }));
+
+        res.json({ items: simplifiedPods });
     } catch (error) {
-        console.error('Error proxying to backend-service:', error);
-        res.status(500).json({ error: 'Failed to proxy to backend-service' });
+        console.error('Error fetching pods:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 app.listen(port, '0.0.0.0', () => {
