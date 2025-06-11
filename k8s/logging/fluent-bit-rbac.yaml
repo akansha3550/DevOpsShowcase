@@ -1,3 +1,4 @@
+# This file defines the RBAC permissions for Fluent Bit in a Kubernetes cluster.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
