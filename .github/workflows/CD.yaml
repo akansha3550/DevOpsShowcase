@@ -22,7 +22,9 @@ jobs:
             export KUBECONFIG=/home/ubuntu/k3s.yaml
 
             echo "Deploying Kubernetes manifests"
-            # kubectl apply --validate=false -f /home/ubuntu/DevOpsShowcase/k8s/
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/
+
+            echo "Deploying ELK Stack"
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/logging/
 
           EOF
