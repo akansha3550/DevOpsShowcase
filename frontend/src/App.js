@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaSyncAlt, FaBox, FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
 import "./App.css";
 
 function App() {
@@ -9,7 +10,6 @@ function App() {
 
   // ✅ Call same origin (frontend Express proxy)
   const API_BASE_URL = ""; // Use same origin, proxy will handle backend requests
-
 
   const fetchPods = () => {
     setLoading(true);
@@ -38,12 +38,30 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const renderStatusIcon = (status) => {
+    switch (status) {
+      case "Running":
+        return <FaCheckCircle className="status-icon running" title="Running" />;
+      case "Pending":
+        return <FaClock className="status-icon pending" title="Pending" />;
+      case "Failed":
+        return <FaTimesCircle className="status-icon failed" title="Failed" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>🚀 KubeVisualizer Dashboard</h1>
-        <button className="refresh-btn" onClick={fetchPods}>
-          🔁 Manual Refresh
+        <h1>
+          <span role="img" aria-label="rocket">
+            🚀
+          </span>{" "}
+          KubeVisualizer Dashboard
+        </h1>
+        <button className="refresh-btn" onClick={fetchPods} aria-label="Manual Refresh">
+          <FaSyncAlt /> Manual Refresh
         </button>
 
         {loading && <p>⏳ Loading pods...</p>}
@@ -51,18 +69,25 @@ function App() {
 
         {!loading && !error && (
           <>
-            <h2>📦 Pods List ({pods.length} total)</h2>
+            <h2>
+              <FaBox /> Pods List ({pods.length} total)
+            </h2>
             <div className="pod-grid">
               {pods.map((pod, index) => (
-                <div key={index} className="pod-card">
+                <div key={index} className="pod-card" tabIndex={0} aria-label={`Pod ${pod.metadata.name}`}>
                   <h3>{pod.metadata.name}</h3>
                   <p>
                     <strong>Status:</strong>{" "}
+                    {renderStatusIcon(pod.status.phase)}{" "}
                     <span
                       className={
                         pod.status.phase === "Running"
                           ? "status-running"
-                          : "status-error"
+                          : pod.status.phase === "Pending"
+                            ? "status-pending"
+                            : pod.status.phase === "Failed"
+                              ? "status-failed"
+                              : "status-unknown"
                       }
                     >
                       {pod.status.phase}
