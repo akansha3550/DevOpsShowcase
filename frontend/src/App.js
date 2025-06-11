@@ -8,12 +8,12 @@ function App() {
   const [refreshCount, setRefreshCount] = useState(0);
 
   // ✅ Call same origin (frontend Express proxy)
-  const API_BASE_URL = "http://54.174.82.207:5000"; // <- set to backend service external URL
+  const API_BASE_URL = ""; // Use same origin, proxy will handle backend requests
 
 
   const fetchPods = () => {
     setLoading(true);
-    fetch(`${API_BASE_URL}/pods`)
+    fetch(`/pods`)
       .then((res) => {
         if (!res.ok) throw new Error("Server error");
         return res.json();
