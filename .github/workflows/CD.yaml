@@ -23,6 +23,9 @@ jobs:
             echo "Deploying Kubernetes manifests"
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/
 
+            echo "Creating 'logging' namespace if it doesn't exist"
+            kubectl get namespace logging || kubectl create namespace logging
+
             echo "Deploying ELK Stack"
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/logging/
 
