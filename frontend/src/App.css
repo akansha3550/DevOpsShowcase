@@ -1,81 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
 }
 
 .App {
   text-align: center;
   padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-header {
   max-width: 1000px;
   margin: auto;
   background-color: #ffffff;
-  padding: 2rem;
+  padding: 2rem 3rem;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.App-header:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #1a237e;
+  color: #1976d2;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 h2 {
   margin-top: 2rem;
   color: #2c3e50;
+  font-weight: 600;
+  border-bottom: 2px solid #1976d2;
+  padding-bottom: 0.5rem;
+  display: inline-block;
 }
 
 .refresh-btn {
   background-color: #1976d2;
   color: white;
   border: none;
-  padding: 10px 20px;
-  margin-top: 10px;
+  padding: 12px 28px;
+  margin-top: 15px;
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
 }
 
 .refresh-btn:hover {
   background-color: #125aa5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(18, 90, 165, 0.5);
 }
 
 .pod-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .pod-card {
   background-color: #ffffff;
-  border-left: 6px solid #1976d2;
-  border-radius: 10px;
-  padding: 1rem;
+  border-left: 8px solid #1976d2;
+  border-radius: 14px;
+  padding: 1.5rem 1.8rem;
   text-align: left;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, border-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 
 .pod-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   border-color: #00bcd4;
+  box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
 }
 
 .pod-card h3 {
   margin-top: 0;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: #1976d2;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.8rem;
+}
+
+.status-running,
+.status-pending,
+.status-succeeded,
+.status-failed {
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: white;
+  display: inline-block;
+  font-size: 0.9rem;
+  user-select: none;
 }
 
 .status-running {
-  color: #2e7d32;
-  font-weight: bold;
+  background-color: #2e7d32;
+}
+
+.status-pending {
+  background-color: #f9a825;
+}
+
+.status-succeeded {
+  background-color: #388e3c;
+}
+
+.status-failed {
+  background-color: #c62828;
 }
 
 .status-error {
@@ -83,11 +132,37 @@ h2 {
   font-weight: bold;
 }
 
+.pod-info {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+  color: #555;
+}
+
 .error {
   color: #c62828;
   margin-top: 1rem;
   font-weight: bold;
   background-color: #ffebee;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 8px rgba(198, 40, 40, 0.2);
+}
+
+@media (max-width: 600px) {
+  .App-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .pod-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .refresh-btn {
+    width: 100%;
+    padding: 14px 0;
+  }
 }
