@@ -16,10 +16,10 @@ spec:
                 name: frontend-service
                 port:
                   number: 80
-          - path: /api
+          - path: /pods
             pathType: Prefix
             backend:
               service:
                 name: backend-service
                 port:
-                  number: 5000
+                  number: 3000
