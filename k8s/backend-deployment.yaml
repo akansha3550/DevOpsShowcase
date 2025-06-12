@@ -20,3 +20,10 @@ spec:
           image: akanshachauhary/kube-visualizer-backend:latest
           ports:
             - containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m # minimum CPU guaranteed for the container
+              memory: 128Mi # optional, but good practice to add memory requests too
+            limits:
+              cpu: 500m # max CPU allowed for the container
+              memory: 256Mi # optional memory limit
