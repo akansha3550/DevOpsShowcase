@@ -8,8 +8,8 @@ function App() {
   const [error, setError] = useState("");
   const [refreshCount, setRefreshCount] = useState(0);
 
-  // ✅ Call same origin (frontend Express proxy)
-  const API_BASE_URL = ""; // Use same origin, proxy will handle backend requests
+  // ✅ Call same origin (ingress will handle backend requests)
+  const API_BASE_URL = ""; // Use same origin
 
   const fetchPods = () => {
     setLoading(true);
