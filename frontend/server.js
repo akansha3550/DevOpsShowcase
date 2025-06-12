@@ -5,12 +5,12 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Proxy /pods requests to backend-service:5000
-app.use('/pods', createProxyMiddleware({
+// Proxy /api requests to backend-service:5000
+app.use('/api', createProxyMiddleware({
     target: 'http://backend-service:5000',
     changeOrigin: true,
     pathRewrite: {
-        '^/pods': '/pods',
+        '^/api': '/pods',
     },
 }));
 
