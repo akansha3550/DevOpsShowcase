@@ -5,6 +5,7 @@ metadata:
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
+  ingressClassName: traefik
   rules:
     - http:
         paths:
@@ -14,7 +15,7 @@ spec:
               service:
                 name: frontend-service
                 port:
-                  number: 3000
+                  number: 80
           - path: /api
             pathType: Prefix
             backend:
