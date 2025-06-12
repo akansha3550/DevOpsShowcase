@@ -13,7 +13,7 @@ function App() {
 
   const fetchPods = () => {
     setLoading(true);
-    fetch(`/pods`)
+    fetch(`/api/pods`)
       .then((res) => {
         if (!res.ok) throw new Error("Server error");
         return res.json();
