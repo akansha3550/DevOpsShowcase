@@ -16,10 +16,22 @@ resource "aws_instance" "k3s_node" {
 
   user_data = <<-EOF
               #!/bin/bash
+              apt-get update -y
+              apt-get install -y curl
               curl -sfL https://get.k3s.io | sh -
+
+              # Set up kubeconfig for ubuntu user
               cp /etc/rancher/k3s/k3s.yaml /home/ubuntu/k3s.yaml
               chown ubuntu:ubuntu /home/ubuntu/k3s.yaml
+              chmod 644 /home/ubuntu/k3s.yaml
+
+              mkdir -p /home/ubuntu/.kube
+              cp /etc/rancher/k3s/k3s.yaml /home/ubuntu/.kube/config
+              chown -R ubuntu:ubuntu /home/ubuntu/.kube
+              chmod 600 /home/ubuntu/.kube/config
               sed -i "s/127.0.0.1/$(curl -s ifconfig.me)/" /home/ubuntu/k3s.yaml
+              echo 'export KUBECONFIG=/home/ubuntu/k3s.yaml' >> /home/ubuntu/.bashrc
+              chown ubuntu:ubuntu /home/ubuntu/.bashrc
               EOF
 }
 
