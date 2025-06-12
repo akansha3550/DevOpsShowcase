@@ -29,7 +29,8 @@ resource "aws_instance" "k3s_node" {
               cp /etc/rancher/k3s/k3s.yaml /home/ubuntu/.kube/config
               chown -R ubuntu:ubuntu /home/ubuntu/.kube
               chmod 600 /home/ubuntu/.kube/config
-              sed -i "s/127.0.0.1/$(curl -s ifconfig.me)/" /home/ubuntu/k3s.yaml
+              PRIVATE_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+              sed -i "s/127.0.0.1/$PRIVATE_IP/" /home/ubuntu/k3s.yaml
               echo 'export KUBECONFIG=/home/ubuntu/k3s.yaml' >> /home/ubuntu/.bashrc
               chown ubuntu:ubuntu /home/ubuntu/.bashrc
               EOF
