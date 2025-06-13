@@ -4,7 +4,6 @@ metadata:
   name: kubevisualizer-ingress
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
-    traefik.ingress.kubernetes.io/router.middlewares: kubevisualizer-strip-api@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
