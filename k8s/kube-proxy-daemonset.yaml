@@ -22,6 +22,7 @@ spec:
           command:
             - /usr/local/bin/kube-proxy
             - --proxy-mode=iptables
+            # Removed --config flag to use default config
             - --hostname-override=$(NODE_NAME)
           env:
             - name: NODE_NAME
