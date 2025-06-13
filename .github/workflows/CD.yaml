@@ -35,12 +35,12 @@ jobs:
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/kubevisualizer-strip-api-middleware.yaml
 
             echo "Deploying Kubernetes manifests"
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/traefik-service.yaml
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/backend-deployment.yaml
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/backend-service.yaml
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/frontend-deployment.yaml
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/frontend-service.yaml
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/ingress.yaml
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/traefik-service.yaml
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/kube-proxy-daemonset.yaml
 
             echo "Waiting for kube-proxy and traefik pods to be ready"
