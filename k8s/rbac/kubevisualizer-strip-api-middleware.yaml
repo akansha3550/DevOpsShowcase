@@ -1,6 +1,5 @@
 # This file defines a Traefik Middleware that strips the /api prefix from requests
 # to the backend service, allowing the frontend service to handle requests without the /api prefix.
-# # This is useful for applications that expect requests to be made without a specific prefix.
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
