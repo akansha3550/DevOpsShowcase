@@ -14,14 +14,25 @@ jobs:
           echo "${{ secrets.EC2_KEY }}" > ec2-key.pem
           chmod 600 ec2-key.pem
 
+      - name: Load IPVS kernel modules on EC2 node
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            sudo modprobe ip_vs
+            sudo modprobe ip_vs_rr
+            sudo modprobe ip_vs_wrr
+            sudo modprobe ip_vs_sh
+            sudo modprobe nf_conntrack_ipv4
+          EOF
+
       - name: Deploy to EC2 Server
         run: |
           ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             echo "Setting kubeconfig"
             export KUBECONFIG=/home/ubuntu/k3s.yaml
 
-            # echo "Creating 'logging' namespace if it doesn't exist"
-            # kubectl get namespace logging || kubectl create namespace logging
+            echo "Deploying RBAC resources"
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/kube-proxy-rbac.yaml
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/kubevisualizer-strip-api-middleware.yaml
 
             echo "Deploying Kubernetes manifests"
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/backend-deployment.yaml
@@ -32,10 +43,8 @@ jobs:
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/traefik-service.yaml
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/kube-proxy-daemonset.yaml
 
-            echo "Deploying RBAC resources"
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/
-
-            # echo "Deploying ELK Stack"
-            # kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/logging/
+            echo "Waiting for kube-proxy and traefik pods to be ready"
+            kubectl rollout status daemonset/kube-proxy -n kube-system --timeout=120s
+            kubectl rollout status deployment/traefik -n kube-system --timeout=120s
 
           EOF
