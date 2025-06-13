@@ -10,9 +10,9 @@ spec:
   ports:
     - name: web
       port: 80
-      targetPort: 8080
+      targetPort: 8000 # <== FIXED: actual HTTP port inside the container
       nodePort: 30080
     - name: websecure
       port: 443
-      targetPort: 8443 # Typically Traefik's HTTPS port, may need adjustment
+      targetPort: 8443 # <== Optional: change only if Traefik uses HTTPS
       nodePort: 30443
