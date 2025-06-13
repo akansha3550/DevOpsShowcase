@@ -21,7 +21,7 @@ spec:
           image: k8s.gcr.io/kube-proxy:v1.27.3
           command:
             - /usr/local/bin/kube-proxy
-            - --config=/var/lib/kube-proxy/config.conf
+            - --proxy-mode=iptables
             - --hostname-override=$(NODE_NAME)
           env:
             - name: NODE_NAME
