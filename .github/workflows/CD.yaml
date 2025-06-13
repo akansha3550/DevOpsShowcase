@@ -20,16 +20,22 @@ jobs:
             echo "Setting kubeconfig"
             export KUBECONFIG=/home/ubuntu/k3s.yaml
 
-            echo "Creating 'logging' namespace if it doesn't exist"
-            kubectl get namespace logging || kubectl create namespace logging
+            # echo "Creating 'logging' namespace if it doesn't exist"
+            # kubectl get namespace logging || kubectl create namespace logging
 
             echo "Deploying Kubernetes manifests"
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/backend-deployment.yaml
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/backend-service.yaml
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/frontend-deployment.yaml
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/frontend-service.yaml
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/ingress.yaml
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/traefik-service.yaml
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/kube-proxy-daemonset.yaml
 
             echo "Deploying RBAC resources"
             kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/
 
-            echo "Deploying ELK Stack"
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/logging/
+            # echo "Deploying ELK Stack"
+            # kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/logging/
 
           EOF
