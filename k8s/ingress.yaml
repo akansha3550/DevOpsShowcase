@@ -1,5 +1,5 @@
 apiVersion: networking.k8s.io/v1
-kind: Ingress
+kind: Ingress # <== FIXED: Use networking.k8s.io/v1 for Ingress
 metadata:
   name: kubevisualizer-ingress
   annotations:
