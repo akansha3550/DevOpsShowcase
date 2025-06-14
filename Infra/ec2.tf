@@ -17,7 +17,12 @@ resource "aws_instance" "k3s_node" {
   user_data = <<-EOF
               #!/bin/bash
               apt-get update -y
-              apt-get install -y curl
+              apt-get install -y curl iptables
+
+              # Switch to legacy iptables
+              update-alternatives --set iptables /usr/sbin/iptables-legacy
+              update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+
               curl -sfL https://get.k3s.io | sh -
 
               # Set up kubeconfig for ubuntu user
