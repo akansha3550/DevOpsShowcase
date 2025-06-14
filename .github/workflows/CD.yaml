@@ -31,20 +31,12 @@ jobs:
             export KUBECONFIG=/home/ubuntu/k3s.yaml
 
             echo "Deploying RBAC resources"
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/kube-proxy-rbac.yaml
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/kubevisualizer-strip-api-middleware.yaml
-
+            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/
+            
             echo "Deploying Kubernetes manifests"
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/traefik-service.yaml
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/backend-deployment.yaml
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/backend-service.yaml
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/frontend-deployment.yaml
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/frontend-service.yaml
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/ingress.yaml
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/kube-proxy-daemonset.yaml
+            kubectl apply --insecure-skip-tls-verify -R -f /home/ubuntu/DevOpsShowcase/k8s/
 
-            echo "Waiting for kube-proxy and traefik pods to be ready"
-            kubectl rollout status daemonset/kube-proxy -n kube-system --timeout=120s
+            echo "Waiting for Traefik to be ready"
             kubectl rollout status deployment/traefik -n kube-system --timeout=120s
 
           EOF
