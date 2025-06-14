@@ -19,14 +19,14 @@ resource "aws_instance" "k3s_node" {
               apt-get update -y
               apt-get install -y curl iptables
 
-              # Switch to legacy iptables where possible
+              # Use legacy iptables
               update-alternatives --set iptables /usr/sbin/iptables-legacy || true
               update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy || true
 
-              # Install k3s with explicit iptables backend and proxy mode
-              curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--kube-proxy-arg=proxy-mode=iptables --iptables-backend=legacy" sh -
+              # Install K3s with proper flags
+              curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--kube-proxy-arg=proxy-mode=iptables" sh -
 
-              # Set up kubeconfig for ubuntu user
+              # Set up kubeconfig
               cp /etc/rancher/k3s/k3s.yaml /home/ubuntu/k3s.yaml
               chown ubuntu:ubuntu /home/ubuntu/k3s.yaml
               chmod 644 /home/ubuntu/k3s.yaml
@@ -35,10 +35,12 @@ resource "aws_instance" "k3s_node" {
               cp /etc/rancher/k3s/k3s.yaml /home/ubuntu/.kube/config
               chown -R ubuntu:ubuntu /home/ubuntu/.kube
               chmod 600 /home/ubuntu/.kube/config
+
               PRIVATE_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
               sed -i "s/127.0.0.1/$PRIVATE_IP/" /home/ubuntu/k3s.yaml
               echo 'export KUBECONFIG=/home/ubuntu/k3s.yaml' >> /home/ubuntu/.bashrc
               chown ubuntu:ubuntu /home/ubuntu/.bashrc
+
               EOF
 }
 
