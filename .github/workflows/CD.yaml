@@ -30,11 +30,17 @@ jobs:
             echo "Setting kubeconfig"
             export KUBECONFIG=/home/ubuntu/k3s.yaml
 
+            echo "Waiting for Kubernetes API server to be ready"
+            until kubectl get nodes &> /dev/null; do
+              echo "Kubernetes API server is not ready yet. Waiting..."
+              sleep 5
+            done
+
             echo "Deploying RBAC resources"
-            kubectl apply --insecure-skip-tls-verify -f /home/ubuntu/DevOpsShowcase/k8s/rbac/
+            kubectl apply --insecure-skip-tls-verify --validate=false -f /home/ubuntu/DevOpsShowcase/k8s/rbac/
             
             echo "Deploying Kubernetes manifests"
-            kubectl apply --insecure-skip-tls-verify -R -f /home/ubuntu/DevOpsShowcase/k8s/
+            kubectl apply --insecure-skip-tls-verify --validate=false -R -f /home/ubuntu/DevOpsShowcase/k8s/
 
             echo "Waiting for Traefik to be ready"
             kubectl rollout status deployment/traefik -n kube-system --timeout=120s
