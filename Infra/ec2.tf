@@ -19,11 +19,12 @@ resource "aws_instance" "k3s_node" {
               apt-get update -y
               apt-get install -y curl iptables
 
-              # Switch to legacy iptables
-              update-alternatives --set iptables /usr/sbin/iptables-legacy
-              update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+              # Switch to legacy iptables where possible
+              update-alternatives --set iptables /usr/sbin/iptables-legacy || true
+              update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy || true
 
-              curl -sfL https://get.k3s.io | sh -
+              # Install k3s with explicit iptables backend and proxy mode
+              curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--kube-proxy-arg=proxy-mode=iptables --iptables-backend=legacy" sh -
 
               # Set up kubeconfig for ubuntu user
               cp /etc/rancher/k3s/k3s.yaml /home/ubuntu/k3s.yaml
