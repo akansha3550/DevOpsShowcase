@@ -110,6 +110,10 @@ app.get('/api/pods', (req, res) => {
     res.redirect('/pods');
 });
 
+app.get('/api', (req, res) => {
+    res.send('Backend API root');
+});
+
 app.listen(port, '0.0.0.0', () => {
     console.log(`Backend running at http://0.0.0.0:${port}`);
 });
