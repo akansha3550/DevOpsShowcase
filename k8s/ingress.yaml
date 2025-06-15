@@ -16,10 +16,11 @@ spec:
                 name: frontend-service
                 port:
                   number: 80
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: backend-service
-                port:
-                  number: 5000
+          # Removed /api path to backend-service to avoid conflict with frontend proxy
+          # - path: /api
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: backend-service
+          #       port:
+          #         number: 5000
