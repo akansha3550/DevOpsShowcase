@@ -72,18 +72,10 @@ app.get('/', (req, res) => {
 });
 
 // Original pods route
-app.get('/pods', async (req, res) => {
+app.get('/api/pods', async (req, res) => {
     try {
         const podsList = await k8sApi.listPodForAllNamespaces();
-
-        if (!podsList || !podsList.items) {
-            console.error('Invalid response from Kubernetes API');
-            return res.status(500).json({ error: 'Invalid response from Kubernetes API' });
-        }
-
-        const pods = podsList.items;
-
-        const simplifiedPods = pods.map(pod => ({
+        const pods = (podsList.items || []).map(pod => ({
             metadata: {
                 name: pod.metadata?.name,
                 namespace: pod.metadata?.namespace,
@@ -96,13 +88,13 @@ app.get('/pods', async (req, res) => {
                 nodeName: pod.spec?.nodeName,
             }
         }));
-
-        res.json({ items: simplifiedPods });
+        res.json({ items: pods });
     } catch (error) {
         console.error('Error fetching pods:', error);
         res.status(500).json({ error: error.message });
     }
 });
+
 
 // New route added for /api/pods to match frontend call
 app.get('/api/pods', (req, res) => {
