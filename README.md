@@ -115,7 +115,7 @@ KubeVisualizer is a demo app (frontend + backend) packaged in Docker, deployed o
 Once deployed, you can access the app using your EC2 public IP on port 30000 (or whichever NodePort is used in your frontend service.yaml).
 
 Example:
-http://<EC2_PUBLIC_IP>:30000
+http://<EC2_PUBLIC_IP>:30080
 
 👨‍💼 About Me
 I'm a DevOps enthusiast building end-to-end workflows with cloud-native tools.

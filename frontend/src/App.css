@@ -1,10 +1,10 @@
 .App {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
+  background-color: #1e293b;
   min-height: 100vh;
   padding: 20px;
-  color: #333;
+  color: #e0e7ff;
 }
 
 .App-header {
@@ -67,12 +67,13 @@ h2 {
 }
 
 .pod-card {
-  background-color: #e0e7ff;
+  background-color: #334155;
+  /* Dark card background */
   border-left: 6px solid #2563eb;
   padding: 20px 25px;
   border-radius: 10px;
   text-align: left;
-  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
   transition: box-shadow 0.3s ease;
 }
 
@@ -83,7 +84,8 @@ h2 {
 }
 
 .pod-card h3 {
-  color: #1e40af;
+  color: #60a5fa;
+  /* Lighter blue for pod name */
   margin-bottom: 12px;
   font-size: 1.25rem;
   font-weight: 700;
@@ -92,7 +94,8 @@ h2 {
 .pod-card p {
   margin: 6px 0;
   font-size: 1rem;
-  color: #1e293b;
+  color: #cbd5e1;
+  /* Light gray text */
 }
 
 .pod-card strong {
@@ -102,31 +105,34 @@ h2 {
 .status-running {
   background-color: #22c55e;
   color: white;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
   vertical-align: middle;
+  box-shadow: 0 0 8px #22c55eaa;
 }
 
 .status-pending {
   background-color: #facc15;
   color: #1e293b;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
   vertical-align: middle;
+  box-shadow: 0 0 8px #facc15aa;
 }
 
 .status-failed {
   background-color: #ef4444;
   color: white;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
   vertical-align: middle;
+  box-shadow: 0 0 8px #ef4444aa;
 }
 
 .status-icon {
