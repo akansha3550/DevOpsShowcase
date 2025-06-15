@@ -1,177 +1,148 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: #f4f6f8;
+.App {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding: 20px;
   color: #333;
 }
 
-.App {
-  text-align: center;
-  padding: 2rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 .App-header {
-  max-width: 1000px;
-  margin: auto;
-  background-color: #ffffff;
-  padding: 2rem 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-}
-
-.App-header:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: #1976d2;
   font-weight: 700;
-  letter-spacing: 1px;
+  color: #1e40af;
+  margin-bottom: 20px;
 }
 
 h2 {
-  margin-top: 2rem;
-  color: #2c3e50;
-  font-weight: 600;
-  border-bottom: 2px solid #1976d2;
-  padding-bottom: 0.5rem;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #1e40af;
+  padding-bottom: 8px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  color: #1e40af;
 }
 
 .refresh-btn {
-  background-color: #1976d2;
+  background-color: #2563eb;
   color: white;
   border: none;
-  padding: 12px 28px;
-  margin-top: 15px;
-  font-size: 16px;
+  padding: 10px 18px;
   border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+  transition: background-color 0.3s ease;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 
 .refresh-btn:hover {
-  background-color: #125aa5;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(18, 90, 165, 0.5);
+  background-color: #1d4ed8;
+}
+
+.error {
+  color: #dc2626;
+  font-weight: 600;
+  margin-top: 15px;
 }
 
 .pod-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
 }
 
 .pod-card {
-  background-color: #ffffff;
-  border-left: 8px solid #1976d2;
-  border-radius: 14px;
-  padding: 1.5rem 1.8rem;
+  background-color: #e0e7ff;
+  border-left: 6px solid #2563eb;
+  padding: 20px 25px;
+  border-radius: 10px;
   text-align: left;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.15);
+  transition: box-shadow 0.3s ease;
 }
 
-.pod-card:hover {
-  transform: translateY(-6px);
-  border-color: #00bcd4;
-  box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
+.pod-card:hover,
+.pod-card:focus {
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+  outline: none;
 }
 
 .pod-card h3 {
-  margin-top: 0;
-  font-size: 1.3rem;
-  color: #1976d2;
+  color: #1e40af;
+  margin-bottom: 12px;
+  font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.8rem;
+}
+
+.pod-card p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.pod-card strong {
+  font-weight: 600;
+}
+
+.status-running {
+  background-color: #22c55e;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.status-pending {
+  background-color: #facc15;
+  color: #1e293b;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.status-failed {
+  background-color: #ef4444;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  vertical-align: middle;
 }
 
 .status-icon {
   vertical-align: middle;
   margin-right: 6px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
-.status-running,
-.status-pending,
-.status-succeeded,
-.status-failed {
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
-  color: white;
-  display: inline-block;
-  font-size: 0.9rem;
-  user-select: none;
+.status-icon.running {
+  color: #22c55e;
 }
 
-.status-running {
-  background-color: #2e7d32;
+.status-icon.pending {
+  color: #facc15;
 }
 
-.status-pending {
-  background-color: #f9a825;
-}
-
-.status-succeeded {
-  background-color: #388e3c;
-}
-
-.status-failed {
-  background-color: #c62828;
-}
-
-.status-error {
-  color: #c62828;
-  font-weight: bold;
-}
-
-.pod-info {
-  margin: 0.3rem 0;
-  font-size: 1rem;
-  color: #555;
-}
-
-.error {
-  color: #c62828;
-  margin-top: 1rem;
-  font-weight: bold;
-  background-color: #ffebee;
-  padding: 12px;
-  border-radius: 10px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 2px 8px rgba(198, 40, 40, 0.2);
-}
-
-@media (max-width: 600px) {
-  .App-header {
-    padding: 1.5rem 1rem;
-  }
-
-  .pod-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .refresh-btn {
-    width: 100%;
-    padding: 14px 0;
-  }
+.status-icon.failed {
+  color: #ef4444;
 }
