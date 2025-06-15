@@ -45,4 +45,7 @@ jobs:
             echo "Waiting for Traefik to be ready"
             kubectl rollout status deployment/traefik -n kube-system --timeout=120s
 
+            echo "Restarting frontend deployment"
+            kubectl rollout restart deployment frontend-deployment
+
           EOF
