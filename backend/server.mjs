@@ -1,4 +1,4 @@
-// This file is part of the Kubernetes Dashboard project.
+// This is a Node.js backend server that interacts with Kubernetes to fetch pod information.
 import express from 'express';
 import * as k8s from '@kubernetes/client-node';
 
