@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // Proxy /api requests to backend-service:5000
 app.use('/api', createProxyMiddleware({
-    target: 'http://backend-service.default.svc.cluster.local:5000',
+    target: 'http://backend-service.default.svc.cluster.local:3000',
     changeOrigin: true,
     pathRewrite: {
         '^/api': '/pods',
