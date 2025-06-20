@@ -10,7 +10,8 @@ app.use('/api', createProxyMiddleware({
     target: 'http://backend-service.default.svc.cluster.local:3000',
     changeOrigin: true,
     pathRewrite: {
-        '^/api': '/pods',
+        // '^/api': '/pods',
+        '^/api': '/api', // ✅ Preserve /api
     },
 }));
 
