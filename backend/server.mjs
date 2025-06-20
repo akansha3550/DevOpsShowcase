@@ -1,3 +1,4 @@
+// This file is part of the Kubernetes Dashboard project.
 import express from 'express';
 import * as k8s from '@kubernetes/client-node';
 
