@@ -48,4 +48,9 @@ jobs:
             echo "Restarting frontend deployment"
             kubectl rollout restart deployment frontend-deployment
 
+            echo "Deploying ELK stack"
+            kubectl create namespace logging --dry-run=client -o yaml | kubectl apply -f -
+            kubectl apply --insecure-skip-tls-verify --validate=false -R -f /home/ubuntu/DevOpsShowcase/k8s/logging/
+
+
           EOF
