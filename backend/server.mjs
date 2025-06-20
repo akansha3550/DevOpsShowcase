@@ -42,10 +42,10 @@ app.get('/api/pods', async (req, res) => {
 
 
 // New route added for /api/pods to match frontend call
-app.get('/api/pods', (req, res) => {
-    // Simply redirect to /pods
-    res.redirect('/pods');
-});
+// app.get('/api/pods', (req, res) => {
+//     // Simply redirect to /pods
+//     res.redirect('/pods');
+// });
 
 app.get('/api', (req, res) => {
     res.send('Backend API root');
