@@ -5,7 +5,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Proxy /api requests to backend-service:5000
+// Proxy /api requests to backend-service:3000
 app.use('/api', createProxyMiddleware({
     target: 'http://backend-service.default.svc.cluster.local:3000',
     changeOrigin: true,
