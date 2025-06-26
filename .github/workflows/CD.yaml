@@ -30,7 +30,7 @@ jobs:
             echo "Setting kubeconfig"
             export KUBECONFIG=/home/ubuntu/k3s.yaml
 
-            echo "Waiting for Kubernetes API server to be ready"
+            echo "Waiting for Kubernetes API server to be ready on EC2 node"
             until kubectl get nodes &> /dev/null; do
               echo "Kubernetes API server is not ready yet. Waiting..."
               sleep 5
