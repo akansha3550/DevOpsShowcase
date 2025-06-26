@@ -1,3 +1,4 @@
+# This file defines the Kubernetes deployment and service for Kibana, which is used to visualize logs stored in Elasticsearch.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
