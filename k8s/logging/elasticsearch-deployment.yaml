@@ -23,6 +23,9 @@ spec:
               value: single-node
             - name: ES_JAVA_OPTS
               value: "-Xms512m -Xmx512m"
+          volumeMounts:
+            - name: elasticsearch-storage
+              mountPath: /usr/share/elasticsearch/data
           resources:
             requests:
               ephemeral-storage: "100Mi"
@@ -32,6 +35,9 @@ spec:
               ephemeral-storage: "500Mi"
               memory: "1Gi"
               cpu: "500m"
+      volumes:
+        - name: elasticsearch-storage
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
