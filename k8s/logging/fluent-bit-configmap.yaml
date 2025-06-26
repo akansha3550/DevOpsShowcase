@@ -27,10 +27,12 @@ data:
     [OUTPUT]
         Name  es
         Match *
-        Host  elasticsearch
+        # Host  elasticsearch
+        Host  elasticsearch.logging.svc.cluster.local
         Port  9200
         Index kube-logs
         Type  _doc
+        Logstash_Format On
   parsers.conf: |
     [PARSER]
         Name   docker

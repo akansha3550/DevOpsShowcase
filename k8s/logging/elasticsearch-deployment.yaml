@@ -24,12 +24,14 @@ spec:
             - name: ES_JAVA_OPTS
               value: "-Xms512m -Xmx512m"
           resources:
-            limits:
-              memory: "1Gi"
-              cpu: "500m"
             requests:
+              ephemeral-storage: "100Mi"
               memory: "512Mi"
               cpu: "250m"
+            limits:
+              ephemeral-storage: "500Mi"
+              memory: "1Gi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
