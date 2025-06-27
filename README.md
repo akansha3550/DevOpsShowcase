@@ -84,7 +84,7 @@ Outputs:
 ssh -i ~/.ssh/id_rsa ubuntu@<EC2_PUBLIC_IP>
 ```
 
-🚀 GitHub Actions CI/CD
+## 🚀 GitHub Actions CI/CD
 1. **CI Workflow**
 
 - On code push, builds Docker image
