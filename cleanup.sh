@@ -1,3 +1,5 @@
+# File: cleanup.sh
+# This script performs cleanup tasks on a Linux system, including cleaning the apt cache, removing old
 #!/bin/bash
 echo "[1/4] Cleaning apt cache..."
 sudo apt clean && sudo apt autoremove -y
