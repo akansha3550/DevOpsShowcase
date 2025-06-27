@@ -58,7 +58,7 @@ kubectl apply -f k8s/
 
 # Access app
 minikube service frontend-service
-<----->
+```
 
 ## ☁️ Cloud Deployment on AWS EC2
 
