@@ -2,7 +2,7 @@
 
 Welcome to KubeVisualizer, an end-to-end DevOps showcase project that integrates frontend, backend, cloud infrastructure, and observability tools. This project simulates real-world DevOps workflows, including CI/CD pipelines, container orchestration, infrastructure automation, and centralized logging.
 
-🌟 # Project Overview
+## 🌟 Project Overview
 
 KubeVisualizer is a full-stack application (React frontend + Node.js backend) deployed on a Kubernetes cluster (k3s on AWS EC2). The infrastructure is provisioned using Terraform, container images are built via Docker, and the entire pipeline is automated using GitHub Actions. Logs are centralized and visualized in Kibana using the ELK stack.
 
@@ -22,46 +22,46 @@ KubeVisualizer is a full-stack application (React frontend + Node.js backend) de
 
 ## 🛠️ Features Implemented
 
-✅ Dockerized full-stack app (React frontend, Node backend)
-✅ GitHub Actions CI/CD pipeline for Docker image build and push
-✅ Kubernetes manifests for deployment, service, ingress, HPA
-✅ Terraform automation to provision AWS EC2 + Security Groups
-✅ k3s lightweight Kubernetes on EC2 with app auto-deployment
-✅ Ingress with Traefik for routing and load balancing
-✅ Centralized logging with Filebeat and ELK stack
-✅ Live pod status visualization in frontend via K8s API
+- ✅ Dockerized full-stack app (React frontend, Node backend)
+- ✅ GitHub Actions CI/CD pipeline for Docker image build and push
+- ✅ Kubernetes manifests for deployment, service, ingress, HPA
+- ✅ Terraform automation to provision AWS EC2 + Security Groups
+- ✅ k3s lightweight Kubernetes on EC2 with app auto-deployment
+- ✅ Ingress with Traefik for routing and load balancing
+- ✅ Centralized logging with Filebeat and ELK stack
+- ✅ Live pod status visualization in frontend via K8s API
 
 ## Project Structure
 .
-├── .github/workflows/         # GitHub Actions CI/CD pipelines
-├── terraform/                 # Terraform scripts for AWS EC2
-├── k8s/                       # Kubernetes manifests (YAMLs)
-├── frontend/                  # React app (Dockerized)
-├── backend/                   # Node.js backend (Dockerized)
-├── logging/                   # Filebeat/ELK configurations
-├── rbac/                      # RBAC configs for secure K8s API access
-└── README.md                  # This file
+- ├── .github/workflows/         # GitHub Actions CI/CD pipelines
+- ├── terraform/                 # Terraform scripts for AWS EC2
+- ├── k8s/                       # Kubernetes manifests (YAMLs)
+- ├── frontend/                  # React app (Dockerized)
+- ├── backend/                   # Node.js backend (Dockerized)
+- ├── logging/                   # Filebeat/ELK configurations
+- ├── rbac/                      # RBAC configs for secure K8s API access
+- └── README.md                  # This file
 
-🔄 Local Development (Minikube)
+## 🔄 Local Development (Minikube)
 ```bash
-git clone https://github.com/akansha3550/DevOpsShowcase.git
-cd DevOpsShowcase
+    git clone https://github.com/akansha3550/DevOpsShowcase.git
+    cd DevOpsShowcase
 
 # Build Docker images
 ```bash
-docker build -t <your-dockerhub>/frontend ./frontend
-docker build -t <your-dockerhub>/backend ./backend
+    docker build -t <your-dockerhub>/frontend ./frontend
+    docker build -t <your-dockerhub>/backend ./backend
 
 # Start Minikube
 ```bash
-minikube start
-kubectl apply -f k8s/
+    minikube start
+    kubectl apply -f k8s/
 
 # Access app
 ```bash
-minikube service frontend-service
+    minikube service frontend-service
 
-☁️ **Cloud Deployment on AWS EC2**
+## ☁️Cloud Deployment on AWS EC2
 
 # Requirements
 
@@ -71,9 +71,9 @@ minikube service frontend-service
 
 ## Terraform Setup (in terraform/ folder)
  ```bash
-cd terraform
-terraform init
-terraform apply
+     cd terraform
+     terraform init
+     terraform apply
 
 Outputs:
 
@@ -82,7 +82,7 @@ Outputs:
 
 **SSH into your instance**
    ```bash
-   ssh -i ~/.ssh/id_rsa ubuntu@<EC2_PUBLIC_IP>
+       ssh -i ~/.ssh/id_rsa ubuntu@<EC2_PUBLIC_IP>
 
 🚀 GitHub Actions CI/CD
 1. **CI Workflow**
@@ -105,7 +105,7 @@ Outputs:
 
 🚧 **Logging & Observability with ELK**
 
-Steps
+## Steps ##
 
 - Deploy ELK stack (via manifests under logging/)
 - Deploy Filebeat as DaemonSet
@@ -114,8 +114,8 @@ Steps
 
 **Kibana Search Example**
 ```bash
-kubernetes.labels.app : "frontend"
-kubernetes.labels.app : "backend"
+    kubernetes.labels.app : "frontend"
+    kubernetes.labels.app : "backend"
 
 🌐 Accessing the App
 Once deployed, you can access the app using your EC2 public IP on port 30000 (or whichever NodePort is used in your frontend service.yaml).
