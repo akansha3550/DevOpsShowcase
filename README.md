@@ -32,7 +32,6 @@ KubeVisualizer is a full-stack application (React frontend + Node.js backend) de
 - ✅ Live pod status visualization in frontend via K8s API
 
 ## Project Structure
-.
 - ├── .github/workflows/         # GitHub Actions CI/CD pipelines
 - ├── terraform/                 # Terraform scripts for AWS EC2
 - ├── k8s/                       # Kubernetes manifests (YAMLs)
@@ -48,17 +47,14 @@ KubeVisualizer is a full-stack application (React frontend + Node.js backend) de
     cd DevOpsShowcase
 
 # Build Docker images
-```bash
     docker build -t <your-dockerhub>/frontend ./frontend
     docker build -t <your-dockerhub>/backend ./backend
 
 # Start Minikube
-```bash
     minikube start
     kubectl apply -f k8s/
 
 # Access app
-```bash
     minikube service frontend-service
 
 ## ☁️Cloud Deployment on AWS EC2
