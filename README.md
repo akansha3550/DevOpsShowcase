@@ -46,13 +46,13 @@ KubeVisualizer is a full-stack application (React frontend + Node.js backend) de
 git clone https://github.com/akansha3550/DevOpsShowcase.git
 cd DevOpsShowcase
 
-# Build Docker images
-```bash
+## Build Docker images
+
 docker build -t <your-dockerhub>/frontend ./frontend
 docker build -t <your-dockerhub>/backend ./backend
 
 # Start Minikube
-```bash
+
 minikube start
 kubectl apply -f k8s/
 
