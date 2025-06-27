@@ -12,8 +12,8 @@ data:
 
     [INPUT]
         Name              tail
-        Path              /var/log/containers/*.log
-        Parser            docker
+        Path              Path /var/log/pods/*/*/*.log
+        Parser            json
         Tag               kube.*
         Refresh_Interval  5
         Mem_Buf_Limit     5MB
