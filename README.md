@@ -57,8 +57,8 @@ minikube start
 kubectl apply -f k8s/
 
 # Access app
-    minikube service frontend-service
-
+minikube service frontend-service
+```bash
 ## ☁️Cloud Deployment on AWS EC2
 
 # Requirements
