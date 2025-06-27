@@ -58,10 +58,9 @@ kubectl apply -f k8s/
 
 # Access app
 minikube service frontend-service
+<!-- ❗ CLOSE THE BASH CODE BLOCK above -->
 
-## --------------------------- ###
-
-## Cloud Deployment on AWS EC2
+## ☁️ Cloud Deployment on AWS EC2
 
 # Requirements
 
