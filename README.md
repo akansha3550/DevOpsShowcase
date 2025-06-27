@@ -70,18 +70,19 @@ minikube service frontend-service
 
 ## Terraform Setup (in terraform/ folder)
  ```bash
-     cd terraform
-     terraform init
-     terraform apply
-
+ cd terraform
+ terraform init
+ terraform apply
+```
 Outputs:
 
 - EC2 instance with open ports (22, 3000, 5000, 80, 30080)
 - k3s auto-installed with a startup script
 
 **SSH into your instance**
-   ```bash
-       ssh -i ~/.ssh/id_rsa ubuntu@<EC2_PUBLIC_IP>
+```bash
+ssh -i ~/.ssh/id_rsa ubuntu@<EC2_PUBLIC_IP>
+```
 
 🚀 GitHub Actions CI/CD
 1. **CI Workflow**
@@ -113,8 +114,9 @@ Outputs:
 
 **Kibana Search Example**
 ```bash
-    kubernetes.labels.app : "frontend"
-    kubernetes.labels.app : "backend"
+kubernetes.labels.app : "frontend"
+kubernetes.labels.app : "backend"
+```
 
 🌐 Accessing the App
 Once deployed, you can access the app using your EC2 public IP on port 30000 (or whichever NodePort is used in your frontend service.yaml).
