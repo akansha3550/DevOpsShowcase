@@ -43,10 +43,11 @@ KubeVisualizer is a full-stack application (React frontend + Node.js backend) de
 
 ## 🔄 Local Development (Minikube)
 ```bash
-    git clone https://github.com/akansha3550/DevOpsShowcase.git
-    cd DevOpsShowcase
+     git clone https://github.com/akansha3550/DevOpsShowcase.git
+     cd DevOpsShowcase
 
 # Build Docker images
+```bash
     docker build -t <your-dockerhub>/frontend ./frontend
     docker build -t <your-dockerhub>/backend ./backend
 
